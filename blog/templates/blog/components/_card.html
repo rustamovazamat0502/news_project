@@ -1,0 +1,23 @@
+{% load static %}
+<div class="card text-center mb-3">
+    <div class="card-header bg-dark text-white">
+        <b>{{ article.category.title }}</b>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <div class="card-photo">
+            {% if article.photo %}
+            <img src="{{ article.photo.url }}" width="300">
+            {% else %}
+            <img src="{% static 'blog/img/news.jpg' %}" width="300">
+            {% endif %}
+        </div>
+        <p class="card-text">{{ article.content|truncatewords:20 }}</p>
+        <a href="{{ article.get_absolute_url }}" class="btn btn-outline-info"><b>Подробнее...</b></a>
+    </div>
+
+
+    <div class="card-footer bg-dark text-white ">
+        <b>{{ article.created_at}}</b>
+    </div>
+</div>

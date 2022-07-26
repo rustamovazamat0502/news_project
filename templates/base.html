@@ -1,0 +1,49 @@
+<!doctype html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block title %}
+    <title>Django</title>
+    {% endblock title %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/bg.css' %}">
+
+    {% block style %}
+    {% endblock style %}
+</head>
+<!--<body class="bg-image"-->
+<!--      style="background-image: url('https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp');-->
+<!--  height: 100vh;">-->
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark position-sticky top-0" style="z-index:999;">
+    <div class="container">
+        <header class="w-100">
+            {% block navbar %}
+            {% include 'components/_navbar.html'%}
+            {% endblock navbar %}
+        </header>
+
+    </div>
+</nav>
+<div class="container-fluid text-center">
+    {% block messages %}
+    {% include 'components/_messages.html' %}
+    {% endblock messages %}
+</div>
+<main class="container">
+    {% block main %}
+    {% endblock main %}
+</main>
+
+
+{% block script %}
+{% endblock script %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+</html>

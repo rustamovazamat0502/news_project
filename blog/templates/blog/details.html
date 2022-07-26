@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>{{ title }}</title>
+{% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+{% endblock style %}
+
+{% block main %}
+
+<div class="card text-center mb-3">
+    <div class="card-header">
+        {{ article.category.title }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+
+        <div class="card-photo">
+            {% if article.photo %}
+            <img src="{{ article.photo.url }}" width="600">
+            {% else %}
+            <img src="https://tryeng.ru/wp-content/uploads/2019/04/Marketplace-Lending-News.jpg" width="600">
+            {% endif %}
+        </div>
+
+
+        <p class="card-text">{{ article.content }}</p>
+        <a href="{% url 'article_update' article.pk %}" class="btn btn-success">Изменить</a>
+        <a href="{% url 'article_delete' article.pk %}" class="btn btn-danger">Удалить</a>
+    </div>
+    <div class="card-footer text-muted">
+        {{ article.created_at}}
+    </div>
+</div>
+{% endblock main %}
+
