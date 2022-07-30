@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+
 class Category(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название')
 
@@ -16,6 +17,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Article(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название')
@@ -39,5 +41,3 @@ class Article(models.Model):
 
     def __repr__(self):
         return f'Article(pk={self.pk}, title="{self.title}")'
-
-
