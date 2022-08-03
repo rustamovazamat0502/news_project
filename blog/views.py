@@ -27,7 +27,7 @@ from django.contrib import messages
 #     }
 #     return render(request, 'blog/all_articles.html', content)
 
-class ArticleList(ListView):
+class ArticleList(LoginRequiredMixin, ListView):
     model = Article
     context_object_name = 'articles'
     template_name = 'blog/all_articles.html'
@@ -69,7 +69,7 @@ class ArticleListByCategories(ArticleList):
 #     }
 #     return render(request, 'blog/details.html', content)
 
-class ArticleDetail(DetailView):
+class ArticleDetail(LoginRequiredMixin, DetailView):
     model = Article
     template_name = 'blog/details.html'
 
@@ -101,7 +101,7 @@ class ArticleDetail(DetailView):
 #     }
 #     return render(request, 'blog/article_form.html', context)
 
-class NewArticle(CreateView):
+class NewArticle(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     template_name = 'blog/article_form.html'
     extra_context = {
@@ -121,13 +121,13 @@ class SearchView(ArticleList):
         return article
 
 
-class ArticleUpdate(UpdateView):
+class ArticleUpdate(LoginRequiredMixin, UpdateView):
     model = Article
     form_class = ArticleForm
     template_name = 'blog/article_form.html'
 
 
-class ArticleDelete(DeleteView):
+class ArticleDelete(LoginRequiredMixin, DeleteView):
     model = Article
     success_url = reverse_lazy('index')
     context_object_name = 'article'
@@ -147,7 +147,8 @@ def user_login(request):
             user = form.get_user()
             login(request, user)
             messages.success(request, message='Вы успешно авторизовались')
-            return redirect('index')
+            # return redirect("index")
+            return redirect(request.GET['next'] if 'next' in request.GET else 'index')
         else:
             messages.error(request, 'Что то не так !!!')
             return redirect('login')
@@ -185,9 +186,11 @@ def register(request):
     return render(request, 'blog/register.html', context)
 
 
+@login_required
 def about_us(request):
     return render(request, 'blog/about_us.html')
 
 
+@login_required
 def about_dev(request):
     return render(request, 'blog/about_dev.html')
