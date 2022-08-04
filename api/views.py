@@ -20,14 +20,6 @@ def create_category(request):
 
 
 @api_view(['POST'])
-def create_article(request):
-    serializer = ArticleSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
-
-
-@api_view(['POST'])
 def category_detail(request, pk):
     category = Category.objects.get(id=pk)
     serializer = CategorySerializer(category, many=False)
@@ -54,6 +46,14 @@ def delete_category(request, pk):
 def show_articles(request):
     articles = Article.objects.all()
     serializer = ArticleSerializer(articles, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_article(request):
+    serializer = ArticleSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
     return Response(serializer.data)
 
 
