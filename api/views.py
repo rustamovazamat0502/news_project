@@ -5,7 +5,7 @@ from .serializers import CategorySerializer, ArticleSerializer
 
 
 # ============================================================================
-# CATEGORY
+# CATEGORIES
 # ============================================================================
 @api_view(['GET'])
 def show_categories(request):
@@ -46,7 +46,7 @@ def delete_category(request, pk):
 
 
 # ============================================================================
-# CATEGORY
+# ARTICLES
 # ============================================================================
 @api_view(['GET'])
 def show_articles(request):
