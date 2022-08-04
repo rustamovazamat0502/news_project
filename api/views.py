@@ -4,6 +4,9 @@ from blog.models import Category, Article
 from .serializers import CategorySerializer, ArticleSerializer
 
 
+# ============================================================================
+# CATEGORY
+# ============================================================================
 @api_view(['GET'])
 def show_categories(request):
     categories = Category.objects.all()
@@ -42,6 +45,9 @@ def delete_category(request, pk):
     return Response("Category Deleted Successfully !!!")
 
 
+# ============================================================================
+# CATEGORY
+# ============================================================================
 @api_view(['GET'])
 def show_articles(request):
     articles = Article.objects.all()
