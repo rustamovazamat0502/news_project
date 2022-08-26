@@ -12,7 +12,8 @@
         {% get_all_categories as categories %}
         {% include 'blog/components/_sidebar.html' %}
     </div>
-
+    {{ word }}
+    {{ total }}
     <div class="col-8">
         {% for article in articles %}
         {% include 'blog/components/_card.html' %}

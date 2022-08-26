@@ -1,7 +1,6 @@
 from django.urls import path
 from .views import *
 
-
 urlpatterns = [
     # path('', index, name='index'),
     path('', ArticleList.as_view(), name='index'),
@@ -12,6 +11,7 @@ urlpatterns = [
     # path('new/', add_article, name='add_article')
     path('new/', NewArticle.as_view(), name='add_article'),
     path('search/', SearchView.as_view(), name='search_results'),
+    # path('search/', search_func, name='search_results'),
     path('article/<int:pk>/update', ArticleUpdate.as_view(), name='article_update'),
     path('article/<int:pk>/delete', ArticleDelete.as_view(), name='article_delete'),
     path('profile/', profile, name='profile'),

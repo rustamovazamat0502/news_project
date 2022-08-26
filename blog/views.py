@@ -73,11 +73,11 @@ class ArticleDetail(LoginRequiredMixin, DetailView):
     model = Article
     template_name = 'blog/details.html'
 
-    def get_queryset(self):
+    def get_queryset(self, **kwargs):
         return Article.objects.filter(pk=self.kwargs['pk'], is_published=True)
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data()
+        context = super(ArticleDetail, self).get_context_data(**kwargs)
         article = Article.objects.get(pk=self.kwargs['pk'])
         context['title'] = f'Статья: {article.title}'
         return context
@@ -109,6 +109,9 @@ class NewArticle(LoginRequiredMixin, CreateView):
     }
     success_url = reverse_lazy('index')
 
+    def form_valid(self, form):
+        return super(NewArticle, self).form_valid(form)
+
 
 class SearchView(ArticleList):
     def get_queryset(self):
@@ -119,6 +122,15 @@ class SearchView(ArticleList):
         total = article.count()
         messages.info(self.request, f"Search word: {word} ||| Total results: {total}")
         return article
+
+
+# def search_func(request):
+#     word = request.GET.get("q")
+#     articles = Article.objects.filter(Q(title__icontains=word) | Q(content__icontains=word), is_published=True)
+#     total = articles.count()
+#     messages.success(request=request, message=f"Search word: {word} ||| Total results: {total}")
+#     context = {"word": word, "total": total, "articles": articles}
+#     return render(request, 'blog/all_articles.html', context)
 
 
 class ArticleUpdate(LoginRequiredMixin, UpdateView):
