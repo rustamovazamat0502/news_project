@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from blog.models import Category, Article
 from .serializers import CategorySerializer, ArticleSerializer
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 
 # ============================================================================
@@ -9,39 +10,44 @@ from .serializers import CategorySerializer, ArticleSerializer
 # ============================================================================
 @api_view(['GET'])
 def show_categories(request):
-    categories = Category.objects.all()
+    categories = get_list_or_404(Category)
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def create_category(request):
     serializer = CategorySerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        serializer = CategorySerializer()
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 def category_detail(request, pk):
-    category = Category.objects.get(id=pk)
+    category = get_object_or_404(Category, id=pk)
     serializer = CategorySerializer(category, many=False)
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(["GET", "PUT", "PATCH"])
 def update_category(request, pk):
-    category = Category.objects.get(id=pk)
-    serializer = CategorySerializer(instance=category, data=request.data)
+    category = get_object_or_404(Category, id=pk)
+    serializer = CategorySerializer(instance=category, data=request.data, many=False)
     if serializer.is_valid():
         serializer.save()
+    else:
+        serializer = CategorySerializer(instance=category, many=False)
     return Response(serializer.data)
 
 
 @api_view(['DELETE'])
 def delete_category(request, pk):
-    category = Category.objects.get(id=pk)
-    category.delete()
+    category = get_object_or_404(Category, id=pk)
+    if request.method == "DELETE":
+        category.delete()
     return Response("Category Deleted Successfully !!!")
 
 
